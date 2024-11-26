@@ -7,6 +7,12 @@ cmake_policy(SET CMP0057 NEW)
 
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${CMAKE_SOURCE_DIR}/cmake)
 
+# bm: vcpkg
+set(CMAKE_TOOLCHAIN_FILE "C:/vcpkg/scripts/buildsystems/vcpkg.cmake")
+#set(CUDAToolkit_ROOT "C:/Program Files/NVIDIA GPU Computing Toolkit/CUDA/v12.5")
+#set(CMAKE_CUDA_ARCHITECTURES "80") # Adjust based on the Ampere architecture (86 for RTX 3000 series)
+
+
 project(Falcor
     DESCRIPTION "Falcor Realtime Rendering Framework"
     LANGUAGES CXX C
@@ -127,11 +133,13 @@ endif()
 # Set default CUDA architecture to 75 (Turing).
 # This can be overwritten for individual targets using the CUDA_ARCHITECTURE property.
 if(NOT DEFINED CMAKE_CUDA_ARCHITECTURES)
-  set(CMAKE_CUDA_ARCHITECTURES 75-virtual)
+  set(CMAKE_CUDA_ARCHITECTURES 86)#75-virtual
+  #sm_80, sm_86, sm_87
 endif()
 
 include(CheckLanguage)
 check_language(CUDA)
+
 if(CMAKE_CUDA_COMPILER)
     message(STATUS "Enabling CUDA support.")
     enable_language(CUDA)
@@ -470,3 +478,11 @@ endif()
 
 # Make Mogwai the default startup project in VS.
 set_property(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} PROPERTY VS_STARTUP_PROJECT Mogwai)
+
+#bm (from vcpkg)
+# this is heuristically generated, and may not be correct
+find_package(Imath CONFIG REQUIRED)
+target_link_libraries(Falcor PRIVATE Imath::Imath Imath::ImathConfig)
+
+find_package(TBB CONFIG REQUIRED)
+target_link_libraries(Falcor PRIVATE TBB::tbb TBB::tbbmalloc TBB::tbbmalloc_proxy)
