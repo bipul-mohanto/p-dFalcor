@@ -1,3 +1,7 @@
+# bm-modified
+_README.md
+docs/*
+
 # Build folder.
 /build/
 
@@ -15,6 +19,7 @@
 # IDE folders.
 /.vs/
 /.vscode/
+/.vscode-default
 
 # User files.
 /CMakeUserPresets.json
