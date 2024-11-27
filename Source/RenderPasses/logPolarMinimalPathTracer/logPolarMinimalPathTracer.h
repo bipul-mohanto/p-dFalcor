@@ -26,9 +26,15 @@
  # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  **************************************************************************/
 #pragma once
+
+
 #include "Falcor.h"
 #include "RenderGraph/RenderPass.h"
 #include "Utils/Sampling/SampleGenerator.h"
+
+#include <openxr/openxr.h>
+#include <openxr/openxr_platform.h>
+#include <sranipal/SRanipal.h>
 
 using namespace Falcor;
 
@@ -96,3 +102,4 @@ private:
         ref<RtProgramVars> pVars;
     } mTracer;
 };
+

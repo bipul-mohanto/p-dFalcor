@@ -32,6 +32,11 @@
 #include "RenderGraph/RenderGraph.h"
 #include "AppData.h"
 
+//#include <openxr/openxr.h> //bm: test-working
+//#include <sranipal/SRanipal.h>
+
+
+
 namespace Falcor
 {
     class SettingsProperties;

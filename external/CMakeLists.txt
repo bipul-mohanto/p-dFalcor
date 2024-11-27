@@ -530,3 +530,33 @@ endif()
 set(RTXDI_DIR ${PACKMAN_DIR}/rtxdi)
 add_library(rtxdi INTERFACE)
 target_include_directories(rtxdi INTERFACE ${RTXDI_DIR}/rtxdi-sdk/include)
+
+# what is the difference btw. packman libraries and oridinary 3rdParty libraries?
+#[[
+# openxr
+set(OPENXR_DIR ${PACKMAN_DIR}/OpenXR-SDK)
+if(EXISTS ${OPENXR_DIR}/include/openxr/openxr.h)
+    if(FALCOR_WINDOWS)
+        add_library(OpenXR-SDK SHARED IMPORTED GLOBAL)
+        set_target_properties(OpenXR-SDK PROPERTIES
+            INTERFACE_INCLUDE_DIRECTORIES ${OPENXR_DIR}/include
+            IMPORTED_IMPLIB_RELEASE ${OPENXR_DIR}/build/win64/src/loader/Release/openxr_loader.lib
+            IMPORTED_LOCATION_RELEASE ${OPENXR_DIR}/build/win64/src/loader/Release/openxr_loader.dll
+            IMPORTED_IMPLIB_DEBUG ${OPENXR_DIR}/build/win64/src/loader/Debug/openxr_loaderd.lib
+            IMPORTED_LOCATION_DEBUG ${FALCOR_DEPS_DIR}/build/win64/src/loader/Debug/openxr_loaderd.dll
+        )
+    elseif(FALCOR_LINUX) #bm: untested
+        add_library(OpenXR-SDK SHARED IMPORTED GLOBAL)
+        set_target_properties(OpenXR-SDK PROPERTIES
+            INTERFACE_INCLUDE_DIRECTORIES ${OPENXR_DIR}/include
+            IMPORTED_LOCATION_RELEASE ${OPENXR_DIR}/lib/openxr_loader.so
+            IMPORTED_LOCATION_DEBUG ${OPENXR_DIR}/debug/lib/openxr_loaderd.so
+    )
+    endif()
+    #set(FALCOR_HAS_OPENXR ON PARENT_SCOPE)
+else()
+    #set(FALCOR_HAS_OPENXR OFF PARENT_SCOPE)
+endif()
+]]
+
+

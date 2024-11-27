@@ -225,7 +225,7 @@ message(STATUS "FALCOR_HAS_DLSS: ${FALCOR_HAS_DLSS}")
 message(STATUS "FALCOR_HAS_NV_USD: ${FALCOR_HAS_NV_USD}")
 message(STATUS "FALCOR_HAS_MDL_SDK: ${FALCOR_HAS_MDL_SDK}")
 message(STATUS "FALCOR_ENABLE_USD: ${FALCOR_ENABLE_USD}")
-
+#message(STATUS "FALCOR_HAS_OPENXR: ${FALCOR_HAS_OPENXR}")
 # -----------------------------------------------------------------------------
 # Packman dependencies
 # -----------------------------------------------------------------------------
@@ -486,3 +486,14 @@ target_link_libraries(Falcor PRIVATE Imath::Imath Imath::ImathConfig)
 
 find_package(TBB CONFIG REQUIRED)
 target_link_libraries(Falcor PRIVATE TBB::tbb TBB::tbbmalloc TBB::tbbmalloc_proxy)
+
+# this is heuristically generated, and may not be correct
+#[[
+find_package(OpenXR CONFIG REQUIRED)
+if (NOT OpenXR_FOUND)
+     MESSAGE(FATAL_ERROR "OpenXR not found!")
+endif()
+#target_include_directories(Falcor PRIVATE ${OpenXR_INCLUDE_DIR})
+target_link_libraries(Falcor PRIVATE OpenXR::headers OpenXR::openxr_loader)
+
+]]
